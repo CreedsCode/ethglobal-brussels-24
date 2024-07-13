@@ -17,8 +17,13 @@ contract FundraiseNFT is ERC721, Ownable(msg.sender) {
 		imageURIs = _imageURIs;
 	}
 
-	function mint(address _to) public onlyOwner {
-		uint256 tokenId = _nextTokenId++;
+	// function mint(address _to) public onlyOwner {
+	// 	uint256 tokenId = _nextTokenId++;
+	// 	_safeMint(_to, tokenId);
+	// }
+
+	function mintById(address _to, uint256 _nftId) public onlyOwner {
+		uint256 tokenId = _nftId;
 		_safeMint(_to, tokenId);
 	}
 

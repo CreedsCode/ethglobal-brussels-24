@@ -67,7 +67,11 @@ contract Fundraise is
 		});
 	}
 
-	function contribute(uint256 _fundraiseId, uint256 _amount) public {
+	function contribute(
+		uint256 _fundraiseId,
+		uint256 _amount,
+		uint256 _randomId // Just a hackathon :I
+	) public {
 		FundraiseDetails storage fundraise = fundraises[_fundraiseId];
 		require(fundraise.isActive, "Fundraise is not active");
 		require(block.timestamp <= fundraise.deadline, "Fundraise has ended");
@@ -80,7 +84,7 @@ contract Fundraise is
 			FundraiseNFT nftCollection = FundraiseNFT(
 				fundraise.nftCollectionAddress
 			);
-			nftCollection.mint(msg.sender);
+			nftCollection.mintById(msg.sender, _randomId);
 		}
 	}
 
