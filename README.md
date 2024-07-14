@@ -107,7 +107,8 @@ The `Fundraise` smart contract is designed to facilitate fundraising activities 
   - **Inputs:**
     - `_fundraiseId`: The ID of the fundraise to contribute to.
     - `_amount`: The amount of QST tokens to contribute.
-  - **Outputs:** None (but updates the contributions and totalRaised, and mints an NFT if the contribution is above a threshold)
+    - `_randomId`: The ID of the NFT to mint (uint256).
+  - **Outputs:** None (but transfers QST tokens from the contributor to the contract, mints an NFT if the contribution meets the minimum threshold, and updates both the contributions mapping and fundraise details with the new amount and total raised. It returns nothing explicitly but updates the state with these new details).
 
 - **endFundraise** - Concludes the fundraise, transferring the funds to the creator if the deadline has passed.
   - **Inputs:**
@@ -187,6 +188,31 @@ The `QSTToken` smart contract is an ERC-20 token contract.
   - **Inputs:**
     - `initialSupply`: The initial supply of tokens to be minted.
   - **Outputs:** None (but mints the initial supply of tokens to the deployer's address)
+
+### RandomPhotoFactory.sol
+The `RandomPhotoFactory` smart contract manages the creation and interaction with RandomPhoto contracts. 
+
+**Inputs and Outputs**
+
+- **createRandomPhoto**
+  - **Inputs:**
+    - `id`: The address used as the ID for the new RandomPhoto contract (address).
+    - `photoN`: The number of photos to add to the new RandomPhoto contract (uint16).
+  - **Outputs:** Creates a new RandomPhoto contract. Stores the address of the new RandomPhoto contract in the randomPhotoContracts mapping. Emits the RandomPhotoCreated event with the ID and the address of the new contract.
+   
+-	**getRandomPhotoContract**
+  - **Inputs:**
+    - `id`: The address used as the ID for the RandomPhoto contract (address).
+  - **Outputs:** Returns the address of the RandomPhoto contract instance associated with the given ID (address).
+-	**readResult** 
+  - **Inputs:**
+    - None
+  - **Outputs:** Returns the most recently generated random photo ID stored in the result variable (uint16).
+-	**getRandomPhotoResult** 
+  - **Inputs:**
+    - `id`: The address used as the ID for the RandomPhoto contract (address).
+  - **Outputs:** Calls the getRandomPhoto function in the specified RandomPhoto contract. Updates the result variable with the ID of the randomly selected photo. Emits the RandomPhotoGen event with the ID and the result. Returns the randomly selected photo ID (uint16).
+
  
 
 ## Deployed Contracts:
