@@ -128,8 +128,9 @@ The `FundraiseNFT` smart contract is an ERC-721 token (NFT) contract. It allows 
 
 - **mint** - Mints a new NFT to the specified address, assigning it a unique token ID.
   - **Inputs:**
-    - `_to`: The address to which the new NFT will be minted.
-  - **Outputs:** None (but mints a new NFT with a unique token ID to the specified address)
+    - `_to`: The address to which the NFT will be minted (address).
+    - `_nftId`: The ID of the NFT to mint (uint256).
+  - **Outputs:** Mints an NFT with the specified ID to the provided address. The NFT is safely minted using OpenZeppelin's `_safeMint` function, ensuring that it can only be called by the contract owner.
 
 - **tokenURI** - Retrieves the URI of the image associated with a specific token ID. The URI is determined by the modulo of the token ID and the length of the image URIs array, ensuring a circular reference to the URIs.
   - **Inputs:**
