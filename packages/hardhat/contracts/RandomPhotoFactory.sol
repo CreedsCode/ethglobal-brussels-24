@@ -9,6 +9,7 @@ contract RandomPhotoFactory {
 
     event RandomPhotoCreated(address indexed id, address indexed contractAddress);
     event RandomPhotoGen(address indexed id, uint16 result);
+    uint16 public result;
 
     /**
      * @dev Creates a new instance of RandomPhoto contract for a given ID.
@@ -35,6 +36,11 @@ contract RandomPhotoFactory {
         return randomPhotoContracts[id];
     }
 
+    function readResult() public view returns (uint16) {
+        return result;
+    }
+
+
     /**
      * @dev Calls the getRandomPhoto function in the specified RandomPhoto contract and returns its result.
      * @param id The ID of the collection.
@@ -45,7 +51,7 @@ contract RandomPhotoFactory {
 
         RandomPhoto randomPhoto = RandomPhoto(randomPhotoContracts[id]);
         
-        uint16 result = randomPhoto.getRandomPhoto();
+        result = randomPhoto.getRandomPhoto();
         emit RandomPhotoGen(id, result);
         return result;
     }
