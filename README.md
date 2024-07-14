@@ -187,6 +187,24 @@ The `QSTToken` smart contract is an ERC-20 token contract.
   - **Inputs:**
     - `initialSupply`: The initial supply of tokens to be minted.
   - **Outputs:** None (but mints the initial supply of tokens to the deployer's address)
+ 
+
+## Deployed Contracts:
+
+### BaseSepolia
+  - **QSTToken:** 0xF60be104fB98bDC81E3B0B9525C715a041f60c91
+  - **Fundraise:** 0xD832462B1bE2b0c600CC87b734E630408736E875
+
+### ScrollSepolia
+  - **QSTToken:** 0xd977422c9eE9B646f64A4C4389a6C98ad356d8C4
+  - **Fundraise:** 0x1eB5C49630E08e95Ba7f139BcF4B9BA171C9a8C7
+
+### ArbitrumSepolia
+  - **QSTToken:** 0x4EE7c7970a92132F757A1F6dC5e6FCff51E17A21
+  - **Fundraise:** 0xd5b82A25b664eec7cfc7EEE580Acfa99Cc753897
+
+### Inco
+  - **RandomPhotoFactory:** 0x7bc06c482DEAd17c0e297aFbC32f6e63d3846650
 
 ## Workflow
 
