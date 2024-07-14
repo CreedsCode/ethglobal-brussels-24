@@ -8835,6 +8835,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fhevm@npm:^0.5.3":
+  version: 0.5.3
+  resolution: "fhevm@npm:0.5.3"
+  dependencies:
+    "@openzeppelin/contracts": ^5.0.1
+    solidity-comments-linux-x64-gnu: ^0.1.1
+  checksum: 8b0b6ee3655d51357ab148fd601b1ac08f7f454c2c2732e6f7e47ec0ad520fa7a184f668dff6e9d93d532ca61a8c5ffd75ade8e03903387d2a8250103e5fd276
+  languageName: node
+  linkType: hard
+
 "file-entry-cache@npm:^6.0.1":
   version: 6.0.1
   resolution: "file-entry-cache@npm:6.0.1"
@@ -14554,6 +14564,14 @@ __metadata:
   bin:
     solcjs: solc.js
   checksum: e3eaeac76e60676377b357af8f3919d4c8c6a74b74112b49279fe8c74a3dfa1de8afe4788689fc307453bde336edc8572988d2cf9e909f84d870420eb640400c
+  languageName: node
+  linkType: hard
+
+"solidity-comments-linux-x64-gnu@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "solidity-comments-linux-x64-gnu@npm:0.1.1"
+  checksum: 7aab1dc1f9828d15560159eb3bd4d758f2ed36fd808512bb58976f5172ec46c2c3397e3b368dec53e74935e6925131f39e94aae597abfe4016ab515ec29061a0
+  conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
