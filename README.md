@@ -213,7 +213,62 @@ The `RandomPhotoFactory` smart contract manages the creation and interaction wit
     - `id`: The address used as the ID for the RandomPhoto contract (address).
   - **Outputs:** Calls the getRandomPhoto function in the specified RandomPhoto contract. Updates the result variable with the ID of the randomly selected photo. Emits the RandomPhotoGen event with the ID and the result. Returns the randomly selected photo ID (uint16).
 
- 
+### RandomPhoto.sol
+
+The `RandomPhoto` smart contract manages a collection of photos, allowing new photos to be added and selecting a random available photo.
+
+- **addPhotos** 
+  - **Inputs:**
+    - `photoN`: The number of photos to add (uint16).
+  - **Outputs:** Adds the specified number of photos to the photos array.
+Updates the photos array with new Photo structs, each with a unique ID and marked as available.
+Returns nothing explicitly but updates the state by adding new photos.
+
+- **randomNumber**
+  - **Inputs:**
+    - None
+  - **Outputs:** Generates a random number using the TFHE library.
+Emits the RandomNumberGenerated event with the generated number.
+Returns the randomly generated number (uint16).
+
+- **getRandomPhoto** 
+  - **Inputs:**
+    - None
+  - **Outputs:** Calls updateAvailablePhotos to refresh the list of available photos.
+Selects a random photo from the availablePhotos array.
+Marks the selected photo as unavailable in the photos array.
+Updates the result variable with the ID of the selected photo.
+Returns the ID of the randomly selected photo (uint16).
+
+- **updateAvailablePhotos** 
+  - **Inputs:**
+    - None
+  - **Outputs:** Refreshes the availablePhotos array by iterating through the photos array and adding only available photos to availablePhotos. Returns nothing explicitly but updates the state by refreshing the list of available photos.
+
+
+## Explanation of the `randomNumber` Function
+
+The `randomNumber` function in the `RandomPhoto` smart contract is a critical component that leverages Fully Homomorphic Encryption (FHE) to securely generate random numbers on the blockchain. This function ensures the randomness is verifiable and secure, which is essential for applications where fairness and unpredictability are crucial, such as selecting a random photo from a collection.
+
+#### Function Code
+
+```solidity
+function randomNumber() public returns (uint16) {
+    euint16 enumber = TFHE.randEuint16();
+    uint16 rnd = TFHE.decrypt(enumber);
+    emit RandomNumberGenerated(rnd);
+    return rnd;
+}
+```
+
+### Next.js API Implementation
+
+The two main functions of the smart contract, creating a random photo collection and retrieving a random photo, are implemented in the Next.js API. These API routes facilitate interaction with the smart contract from a web application, providing a user-friendly interface for managing and accessing photo collections on the blockchain.
+
+- Create Random Photo Collection: An API route to initialize a new photo collection and add a specified number of photos.
+- Retrieve Random Photo: An API route to fetch a random photo from an existing collection.
+
+These implementations ensure that users can seamlessly interact with the decentralized photo collection system, leveraging the security and transparency of the Inco Network and FHE technology.
 
 ## Deployed Contracts:
 
@@ -231,6 +286,7 @@ The `RandomPhotoFactory` smart contract manages the creation and interaction wit
 
 ### Inco
   - **RandomPhotoFactory:** 0x7bc06c482DEAd17c0e297aFbC32f6e63d3846650
+
 
 ## Workflow
 
