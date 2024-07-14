@@ -1,34 +1,6 @@
-// app/api/randomphoto/route.ts
 import { NextResponse } from "next/server";
 import { ethers } from "ethers";
-
-// ABI of the RandomPhoto contract
-const abi = [
-  {
-    inputs: [
-      {
-        internalType: "uint8",
-        name: "photosN",
-        type: "uint8",
-      },
-      {
-        internalType: "uint8[]",
-        name: "mintedPhotos",
-        type: "uint8[]",
-      },
-    ],
-    name: "getRandomPhoto",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-];
+import externalContracts from "~~/contracts/externalContracts";
 
 // Inco Network configuration
 const incoChain = {
@@ -50,34 +22,23 @@ const incoChain = {
   },
 };
 
-const contractAddress = "0xad20F31Eb4784a26D0e9bf09D84Cbd1871A95bDb";
-
-const mnemonic = process.env.NEXT_PRIVATE_MNEMONIC;
+const mnemonic = "spider inherit minute bring festival file duck discover birth power carbon adult";
 
 export async function GET(request: Request) {
   try {
-    console.log("==============", process.env.NEXT_PRIVATE_MNEMONIC);
     const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
     const photosN = searchParams.get("photosN");
-    const mintedPhotos = searchParams.get("mintedPhotos");
 
-    if (!photosN || !mintedPhotos) {
+    if (!photosN || !ethers.isAddress(id)) {
       return NextResponse.json({ message: "Missing parameters" }, { status: 400 });
     }
 
     const photosNInt = parseInt(photosN);
-    const mintedPhotosArray = mintedPhotos.split(",").map(Number);
 
     // Validate parameters
     if (photosNInt <= 0) {
       return NextResponse.json({ message: "photosN must be a positive number" }, { status: 400 });
-    }
-
-    if (mintedPhotosArray.length >= photosNInt) {
-      return NextResponse.json(
-        { message: "Minted photos can't be more than or equal to total photos" },
-        { status: 400 },
-      );
     }
 
     // Set up provider and wallet
@@ -89,24 +50,23 @@ export async function GET(request: Request) {
 
     const wallet = ethers.Wallet.fromPhrase(mnemonic).connect(provider);
 
+    const contractAddress = externalContracts[9090].RandomPhotoFactory.address;
+
+    const abi = externalContracts[9090].RandomPhotoFactory.abi;
+
     // Create a contract instance with a signer
     const contract = new ethers.Contract(contractAddress, abi, wallet);
 
     try {
       // Call the contract function
-      const tx = await contract.getRandomPhoto(photosNInt, mintedPhotosArray);
+      const tx = await contract.createRandomPhoto(id, photosNInt);
 
       // Wait for the transaction to be mined
       const receipt = await tx.wait();
 
-      // Extract the RandomNumber event from the receipt
-      const event = receipt.events?.find((e: { event: string }) => e.event === "RandomNumber");
-      const randomNumber = event?.args?.[0];
-
       return NextResponse.json(
         {
           message: "Random photo generated",
-          randomPhoto: randomNumber.toString(),
           transactionHash: receipt.transactionHash,
         },
         { status: 200 },
