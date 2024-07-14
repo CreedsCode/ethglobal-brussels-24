@@ -44,6 +44,7 @@
     "node": ">=18.17.0"
   },
   "dependencies": {
+    "@next/font": "^14.2.5",
     "fhevm": "^0.5.3"
   }
 }
